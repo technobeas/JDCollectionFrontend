@@ -126,6 +126,7 @@ export default function CreateOrder() {
             product: selectedProduct._id,
             name: selectedProduct.name,
             sku: selectedProduct.sku,
+            productCode: selectedProduct.productCode || "",
             color,
             size,
             quantity: qty,
@@ -323,7 +324,7 @@ export default function CreateOrder() {
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search product name or SKU..."
+                placeholder="Search product name, SKU or product code..."
                 className="w-full rounded-2xl bg-slate-100 py-3 pl-10 pr-3"
               />
             </div>
@@ -348,7 +349,10 @@ export default function CreateOrder() {
                 >
                   <div className="font-black">{p.name}</div>
                   <div className="mt-1 text-xs text-slate-500">
-                    {p.sku} · Stock: {p.stockQuantity ?? 0}
+                    SKU: {p.sku}
+                    {p.productCode && <> · Code: {p.productCode}</>}
+                    {" · Stock: "}
+                    {p.stockQuantity ?? 0}
                   </div>
                   <div className="mt-2 flex flex-wrap items-baseline gap-2 font-black">
                     {p.discountedPrice != null ? (
@@ -512,7 +516,10 @@ export default function CreateOrder() {
                               {item.name}
                             </div>
                             <div className="mt-0.5 text-xs text-slate-500">
-                              {item.sku}
+                              SKU: {item.sku}
+                              {item.productCode && (
+                                <> · Code: {item.productCode}</>
+                              )}
                             </div>
                           </div>
                           <button
